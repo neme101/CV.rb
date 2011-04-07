@@ -1,5 +1,9 @@
+require './bash_styling.rb'
+
 class Developer
   attr_reader :name, :age, :work_experience, :portfolio, :current_projects
+
+  include Colorize,Styling
   
   def initialize(name,age)
     @name = name
@@ -21,52 +25,37 @@ class Developer
     @current_projects.push({:name => name, :technologies => technologies, :description => description})
   end
 
-  # Styling Output
-  def colorize(text, color_code)
-    "#{color_code}#{text}\e[0m"
-  end
-  def red(text); 
-    colorize(text, "\e[31m"); 
-  end
-  def green(text); 
-    colorize(text, "\e[32m"); 
-  end
-  def yellow(text); 
-    colorize(text, "\e[33m"); 
-  end
-  def blue(text); 
-    colorize(text, "\e[34m"); 
-  end
-  def purple(text); 
-    colorize(text, "\e[35m"); 
-  end
 
   # Output
   def to_s()
+    headers = ["Name","Age"]
+    rows = [@name,@age.to_s]
+    puts table(headers,rows,"-","|");
+
     puts blue("\r\nName and Age:")
     puts green(@name)
     puts green(@age)
-    puts "\r\nWork Experience:"
+    puts red("\r\nWork Experience:")
     @work_experience.each do |w|
-      puts "Language: #{w[:language]}"
-      puts "Time: #{w[:time]}"
-      puts "Worked on: #{w[:worked_on]}"
+      puts green("Language: #{w[:language]}")
+      puts green("Time: #{w[:time]}")
+      puts green("Worked on: #{w[:worked_on]}")
       puts "\r\n"
     end
-    puts "\r\nPortfolio:"
+    puts yellow("\r\nPortfolio:")
     @portfolio.each do |p|
-      puts "Site: #{p[:site]}"
-      puts "Date: #{p[:date]}"
-      puts "Client: #{p[:client]}"
-      puts "Is online?: #{p[:is_online]}"
-      puts "Description: #{p[:description]}"
+      puts green("Site: #{p[:site]}")
+      puts green("Date: #{p[:date]}")
+      puts green("Client: #{p[:client]}")
+      puts green("Is online?: #{p[:is_online]}")
+      puts green("Description: #{p[:description]}")
       puts "\r\n"
     end
-    puts "\r\nCurrent Projects:"
+    puts purple("\r\nCurrent Projects:")
     @current_projects.each do |cp|
-      puts "Name: #{cp[:name]}"
-      puts "Technologies: #{cp[:technologies]}"
-      puts "Description: #{cp[:description]}"
+      puts green("Name: #{cp[:name]}")
+      puts green("Technologies: #{cp[:technologies]}")
+      puts green("Description: #{cp[:description]}")
       puts "\r\n"
     end
   end
@@ -141,7 +130,7 @@ me.add_portfolio(
 # Current Projects
 me.add_current_projects(
   'GoSave',
-  'PHP using CodeIgniter and Dotrine as ORM/DBAL, Javascript using Mootools, Smartfox Server, Flash Games',
+  'PHP using CodeIgniter and Doctrine as ORM/DBAL, Javascript using Mootools, Smartfox Server, Flash Games',
   "Site currently on beta (late march). Involves integration with Facebook, backend of the site and games, and javascript. 
   I've been in charge of dealing with the client (LA based), coordination of the team, setting up the staging environment, definition and migration to the production environment.
   I'm also the Senior backend developer and Javascript developer."
