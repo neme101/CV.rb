@@ -22,14 +22,14 @@ module Styling
 		tfoot = '';
 		thead << vchar + ' '
 		column_sizes = Array.new
-		(1..headers.size) do |i|
-			thead << h headers[i]
+		(1..headers.size).each do |i|
+			thead << headers[i]
 			if headers[i].length > rows[i].length
 				 thead << ' ' + vchar
 			else
 				(rows[i].length - header[i].length)
 			end
-			column_sizes.push(h.length+2)
+			column_sizes.push(headers[i].length+2)
 		end
 		table << v_line(thead.length,hchar,lines_color)
 		table << thead+"\r\n"
